@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://bivh166f2443d"]
 
+[ext_resource type="Script" uid="uid://cqfyt3mrahgod" path="res://Scripts/Player/player.gd" id="1_kyqiw"]
 [ext_resource type="Texture2D" uid="uid://dc1tpos3j8ui8" path="res://Sprites/PlayerSprites/Goob.png" id="1_rpqav"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kyqiw"]
@@ -8,6 +9,7 @@ size = Vector2(183, 470)
 [sub_resource type="SpriteFrames" id="SpriteFrames_gntrk"]
 
 [node name="Area2D" type="Area2D" unique_id=1991289627]
+script = ExtResource("1_kyqiw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=741088183]
 position = Vector2(-0.5, 1)
