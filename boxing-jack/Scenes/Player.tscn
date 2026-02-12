@@ -18,11 +18,10 @@ shape = SubResource("RectangleShape2D_kyqiw")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1796325025]
 sprite_frames = SubResource("SpriteFrames_gntrk")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1282408579]
-
-[node name="Label" type="Label" parent="CanvasLayer" unique_id=690414413]
-offset_right = 40.0
-offset_bottom = 23.0
-
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=838915129]
 texture = ExtResource("1_rpqav")
+
+[node name="Health" type="Label" parent="." unique_id=690414413]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "3"
