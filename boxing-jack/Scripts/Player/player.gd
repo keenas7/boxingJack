@@ -53,4 +53,4 @@ func move(delta: float) -> void:
 			speed = 0
 	position.x += speed * delta
 	'''
-	position.x += MAX_SPEED * delta
+	position.x += MAX_SPEED * delta * moveDir
