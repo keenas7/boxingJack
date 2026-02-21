@@ -1,4 +1,4 @@
-extends RigidBody2D
+extends CharacterBody2D
 
 const MAX_SPEED = 250
 
@@ -6,6 +6,7 @@ const MAX_SPEED = 250
 @export var speed = 0
 @export var accel = 400
 @export var jumpVel = -250
+@export var gravityMul = 0.5
 var healthLabel
 var anim
 
@@ -25,6 +26,8 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	move(delta)
 	jump(delta)
+	affectedByGravity(delta)
+	move_and_slide()
 	
 ############MOVEMENT FUNCTIONS#################
 func move(delta: float) -> void:
@@ -36,14 +39,14 @@ func move(delta: float) -> void:
 		#If the player chooses a direction that is opposite to their current speed
 		# then the player will "slide stop" and start moving in the opposite direction
 		# with their initial speed being a quarter of what it currently was
-		if ((moveDir < 0 && linear_velocity.x > 0)||(moveDir > 0 && linear_velocity.x < 0)):
-			linear_velocity.x = (linear_velocity.x/4)*-1
+		if ((moveDir < 0 && velocity.x > 0)||(moveDir > 0 && velocity.x < 0)):
+			velocity.x = (velocity.x/4)*-1
 		
 		#Check to see if the player has exceeded their max speed
-		if (abs(linear_velocity.x) < MAX_SPEED):
-			linear_velocity.x += accel * moveDir * delta
+		if (abs(velocity.x) < MAX_SPEED):
+			velocity.x += accel * moveDir * delta
 		else:
-			linear_velocity.x = MAX_SPEED * moveDir
+			velocity.x = MAX_SPEED * moveDir
 	else:
 		#This makes the player slow down, and prevents them from "jittering"
 		# when their speed reaches 0, as the constant addition and
@@ -51,21 +54,30 @@ func move(delta: float) -> void:
 		# but never rarely reach it
 		#The formula stops the player once their speed is below 10%
 		# of their acceleration, in order to account for higher acceleration
-		if (linear_velocity.x > accel*0.1):
-			linear_velocity.x -= accel*2 * delta
-		elif (linear_velocity.x < accel*-0.1):
-			linear_velocity.x += accel*2 * delta
+		if (velocity.x > accel*0.1):
+			velocity.x -= accel*2 * delta
+		elif (velocity.x < accel*-0.1):
+			velocity.x += accel*2 * delta
 		else:
-			linear_velocity.x = 0
+			velocity.x = 0
 	
 	
 	moveAnimate(delta,moveDir)
-	#linear_velocity.x = MAX_SPEED * moveDir
+	#velocity.x = MAX_SPEED * moveDir
 
 func jump(delta):
-	#Add a "is_grounded" check
-	if (Input.is_action_pressed("Jump")):
-		linear_velocity.y = jumpVel
+	#Part of the code is taken from the base code for the "CharacterBody2D"
+	# script template
+	if (Input.is_action_just_pressed("Jump") && is_on_floor()):
+		velocity.y = jumpVel
+		
+#This function is needed to control the gravity since there does not seem
+# to be a way to control it by default from the inspector
+func affectedByGravity(delta:float):
+	#Part of the jump code is taken from the base code for the "CharacterBody2D"
+	# script template
+	if (not is_on_floor()):
+		velocity.y += get_gravity().y * gravityMul * delta
 ####################################################
 
 ###########ANIMATION FUNCTIONS######################

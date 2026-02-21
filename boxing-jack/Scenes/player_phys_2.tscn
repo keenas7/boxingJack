@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://ddek5a46d5kt7"]
+
+[ext_resource type="Script" uid="uid://bb7l834dtn1if" path="res://Scripts/Player/player_phys_2.gd" id="1_rocbt"]
+[ext_resource type="Texture2D" uid="uid://dhcfv41d8j8r0" path="res://Sprites/PlayerSprites/Idle pngs/Idle animation1.png" id="2_43ji5"]
+[ext_resource type="Texture2D" uid="uid://knpf1r1046d6" path="res://Sprites/PlayerSprites/Idle pngs/Idle animation2.png" id="3_yinys"]
+[ext_resource type="Texture2D" uid="uid://dhsklfydm8q14" path="res://Sprites/PlayerSprites/Idle pngs/Idle animation3.png" id="4_kx3js"]
+[ext_resource type="Texture2D" uid="uid://c5o8hxxqi5f6b" path="res://Sprites/PlayerSprites/Idle pngs/Idle animation4.png" id="5_8a76v"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q5p76"]
+size = Vector2(109, 160)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g2qkg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_43ji5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_yinys")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_kx3js")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_8a76v")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[node name="Player_Phys_2" type="CharacterBody2D" unique_id=425400130]
+script = ExtResource("1_rocbt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1840348857]
+position = Vector2(-1.5, 78)
+shape = SubResource("RectangleShape2D_q5p76")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1750818118]
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_g2qkg")
+animation = &"Idle"
+
+[node name="Health" type="Label" parent="." unique_id=2009518256]
+offset_left = -28.0
+offset_top = -65.0
+offset_right = 40.0
+offset_bottom = -41.0
+text = "3"
+horizontal_alignment = 1

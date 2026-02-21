@@ -3,15 +3,40 @@
 [ext_resource type="Script" uid="uid://c6eiwuhxmlevs" path="res://Scripts/Main/main.gd" id="1_jjgbg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jjgbg"]
-size = Vector2(1150, 197)
+size = Vector2(1337, 197)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bo1nx"]
+size = Vector2(63, 461)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8gbba"]
+size = Vector2(63, 461)
 
 [node name="Main" type="Node" unique_id=1582123276]
 script = ExtResource("1_jjgbg")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1966180480]
+[node name="BoxingRing" type="StaticBody2D" parent="." unique_id=1966180480]
 position = Vector2(220, 475)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=2064049282]
-position = Vector2(356, 73.5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoxingRing" unique_id=2064049282]
+position = Vector2(353.5, 73.5)
 shape = SubResource("RectangleShape2D_jjgbg")
+
+[node name="LeftWall" type="StaticBody2D" parent="." unique_id=1070182560]
+position = Vector2(-130, 413)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=2043918169]
+position = Vector2(1.5, -185.5)
+shape = SubResource("RectangleShape2D_bo1nx")
+
+[node name="RightWall" type="StaticBody2D" parent="." unique_id=842269986]
+position = Vector2(1274, 416)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=447401627]
+position = Vector2(1.5, -185.5)
+shape = SubResource("RectangleShape2D_8gbba")
+
+[node name="PlayerSpawn" type="Node2D" parent="." unique_id=1089993190]
+position = Vector2(100, 334)
