@@ -1,6 +1,17 @@
 [gd_scene format=3 uid="uid://yd10g5cw400t"]
 
-[ext_resource type="Script" uid="uid://c6eiwuhxmlevs" path="res://Scenes/main.gd" id="1_jjgbg"]
+[ext_resource type="Script" uid="uid://c6eiwuhxmlevs" path="res://Scripts/Main/main.gd" id="1_jjgbg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jjgbg"]
+size = Vector2(1150, 197)
 
 [node name="Main" type="Node" unique_id=1582123276]
 script = ExtResource("1_jjgbg")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1966180480]
+position = Vector2(220, 475)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=2064049282]
+position = Vector2(356, 73.5)
+shape = SubResource("RectangleShape2D_jjgbg")
