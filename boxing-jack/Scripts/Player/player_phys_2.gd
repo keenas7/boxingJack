@@ -7,9 +7,11 @@ const MAX_SPEED = 250
 @export var accel = 400
 @export var jumpVel = -250
 @export var gravityMul = 0.5
-@export var dodgeForceX = -120
-@export var dodgeForceY = -400
+@export var dodgeForceX = -250
+@export var dodgeForceY = -50
+
 @export var stamina = 4
+@export var regenRate = 1
 
 #atkVal and defVal are used for comparing the high/low blocks/punches between the players
 # 0 - means nothing
@@ -42,13 +44,15 @@ func _process(delta: float) -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
-	move(delta)
-	jump()
+	#move(delta)
+	#jump()
 	affectedByGravity(delta)
-	punch()
-	defend()
+	#punch()
+	#defend()
+	#dodge()
 	regenStamina(delta)
 	reduceCooldown(delta)
+	healthLabel.text = str(health, ", ", stamina)
 	move_and_slide()
 	
 ############MOVEMENT FUNCTIONS#################
@@ -84,9 +88,6 @@ func move(delta: float) -> void:
 			velocity.x = 0
 	moveAnimate(delta,moveDir)
 	
-	#Dodge is in the move function since it takes in direction of the player
-	dodge(moveDir)
-	#velocity.x = MAX_SPEED * moveDir
 
 func jump():
 	#Part of the code is taken from the base code for the "CharacterBody2D"
@@ -110,8 +111,10 @@ func punch():
 	var hasMoveBeenPressed = Input.is_action_just_pressed("LowPunch") || Input.is_action_just_pressed("HighPunch")
 	if (hasMoveBeenPressed && stamina >= 2 && moveCooldown <= 0):
 		if (Input.is_action_just_pressed("LowPunch")):
+			print("LowPunch")
 			atkVal = 1
 		elif (Input.is_action_just_pressed("HighPunch")):
+			print("HighPunch")
 			atkVal = 2
 		stamina -= 2
 		moveCooldown = 0.5
@@ -120,8 +123,10 @@ func defend():
 	var hasMoveBeenPressed = Input.is_action_just_pressed("LowBlock") || Input.is_action_just_pressed("HighBlock")
 	if (hasMoveBeenPressed && stamina >= 3 && moveCooldown <= 0):
 		if (Input.is_action_just_pressed("LowBlock")):
+			print("LowBlock")
 			defVal = 1
 		elif (Input.is_action_just_pressed("HighBlock")):
+			print("HighBlock")
 			defVal = 2
 		
 		#The defend function should only consume stamina if the player is hit while blocking
@@ -131,12 +136,12 @@ func defend():
 
 #The dodge function has a problem where dodging while moving left is weaker than dodging
 # when moving right
-func dodge(moveDir):
-	if (Input.is_action_just_pressed("Dodge") && stamina >= 4):
-		print(velocity.x)
-		velocity = Vector2(moveDir*dodgeForceX,randf()*dodgeForceY)
-		print(velocity.x)
+func dodge():
+	if (Input.is_action_just_pressed("Dodge") && stamina >= 4 && moveCooldown <= 0):
+		print("Dodge")
 		stamina -= 4
+		defVal = 3
+		moveCooldown = 0.5
 
 #Function to reduce the value on the moveCooldown, works like a timer
 func reduceCooldown(delta:float):
@@ -149,7 +154,7 @@ func reduceCooldown(delta:float):
 #Function for regerating stamina
 func regenStamina(delta:float):
 	if (stamina < 4):
-		stamina += 0.5 * delta
+		stamina += regenRate * delta
 	else:
 		stamina = 4
 ####################################################
