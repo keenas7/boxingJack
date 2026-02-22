@@ -7,8 +7,26 @@ const MAX_SPEED = 250
 @export var accel = 400
 @export var jumpVel = -250
 @export var gravityMul = 0.5
+@export var dodgeForceX = -120
+@export var dodgeForceY = -400
+@export var stamina = 4
+
+#atkVal and defVal are used for comparing the high/low blocks/punches between the players
+# 0 - means nothing
+# 1 - means low block/attack
+# 2 - means high block/attack
+var atkVal = 0
+var defVal = 0
+
+#moveCooldown is used to determine how long a move should stay active once performed
+# This is to make it so that blocking doesn't have to be frame perfect, but instead, the player has some "leeway"
+# However, when the moveCooldown timer is >0, the player is not able to perform anymore moves
+var moveCooldown = 0
+
 var healthLabel
 var anim
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -25,15 +43,19 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	move(delta)
-	jump(delta)
+	jump()
 	affectedByGravity(delta)
+	punch()
+	defend()
+	regenStamina(delta)
+	reduceCooldown(delta)
 	move_and_slide()
 	
 ############MOVEMENT FUNCTIONS#################
 func move(delta: float) -> void:
 	var moveDir = Input.get_axis("MoveLeft","MoveRight")
 	
-	#More complex movement, commented out for now
+	#More complex movement
 	if (moveDir != 0):
 		
 		#If the player chooses a direction that is opposite to their current speed
@@ -46,7 +68,7 @@ func move(delta: float) -> void:
 		if (abs(velocity.x) < MAX_SPEED):
 			velocity.x += accel * moveDir * delta
 		else:
-			velocity.x = MAX_SPEED * moveDir
+			velocity.x -= accel * moveDir * delta
 	else:
 		#This makes the player slow down, and prevents them from "jittering"
 		# when their speed reaches 0, as the constant addition and
@@ -60,12 +82,13 @@ func move(delta: float) -> void:
 			velocity.x += accel*2 * delta
 		else:
 			velocity.x = 0
-	
-	
 	moveAnimate(delta,moveDir)
+	
+	#Dodge is in the move function since it takes in direction of the player
+	dodge(moveDir)
 	#velocity.x = MAX_SPEED * moveDir
 
-func jump(delta):
+func jump():
 	#Part of the code is taken from the base code for the "CharacterBody2D"
 	# script template
 	if (Input.is_action_just_pressed("Jump") && is_on_floor()):
@@ -78,6 +101,57 @@ func affectedByGravity(delta:float):
 	# script template
 	if (not is_on_floor()):
 		velocity.y += get_gravity().y * gravityMul * delta
+####################################################
+
+###############ATTACK/DEFENSE FUNCTIONS##############
+func punch():
+	#This is to check if a move has been performed, that way the function doesn't end up eating the
+	# player's stamina
+	var hasMoveBeenPressed = Input.is_action_just_pressed("LowPunch") || Input.is_action_just_pressed("HighPunch")
+	if (hasMoveBeenPressed && stamina >= 2 && moveCooldown <= 0):
+		if (Input.is_action_just_pressed("LowPunch")):
+			atkVal = 1
+		elif (Input.is_action_just_pressed("HighPunch")):
+			atkVal = 2
+		stamina -= 2
+		moveCooldown = 0.5
+
+func defend():
+	var hasMoveBeenPressed = Input.is_action_just_pressed("LowBlock") || Input.is_action_just_pressed("HighBlock")
+	if (hasMoveBeenPressed && stamina >= 3 && moveCooldown <= 0):
+		if (Input.is_action_just_pressed("LowBlock")):
+			defVal = 1
+		elif (Input.is_action_just_pressed("HighBlock")):
+			defVal = 2
+		
+		#The defend function should only consume stamina if the player is hit while blocking
+		# (once the collision detection between players has been implemented)
+		stamina -= 3
+		moveCooldown = 0.3
+
+#The dodge function has a problem where dodging while moving left is weaker than dodging
+# when moving right
+func dodge(moveDir):
+	if (Input.is_action_just_pressed("Dodge") && stamina >= 4):
+		print(velocity.x)
+		velocity = Vector2(moveDir*dodgeForceX,randf()*dodgeForceY)
+		print(velocity.x)
+		stamina -= 4
+
+#Function to reduce the value on the moveCooldown, works like a timer
+func reduceCooldown(delta:float):
+	if (moveCooldown >= 0):
+		moveCooldown -= delta
+	else:
+		moveCooldown = 0
+		
+
+#Function for regerating stamina
+func regenStamina(delta:float):
+	if (stamina < 4):
+		stamina += 0.5 * delta
+	else:
+		stamina = 4
 ####################################################
 
 ###########ANIMATION FUNCTIONS######################
