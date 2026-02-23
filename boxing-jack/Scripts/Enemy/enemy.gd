@@ -10,7 +10,7 @@ var sourceName = "Enemy"
 @export var gravityMul = 0.5
 @export var dodgeForceX = -250
 @export var dodgeForceY = -50
-var tempTimer = 3
+var playerPos: Vector2
 
 @export var stamina = 4
 @export var regenRate = 1
@@ -30,8 +30,6 @@ var moveCooldown = 0
 var healthLabel
 var anim
 
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	healthLabel = $Health
@@ -46,20 +44,33 @@ func _process(delta: float) -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
-	#move(delta)
+	var playerDistance = position.x - playerPos.x
+	move(delta, playerDistance)
 	#jump()
 	affectedByGravity(delta)
-	#punch()
-	defend(delta)
-	#dodge()
+	print(playerDistance)
+	if (playerDistance > -110 && playerDistance < 110 && stamina >= 4):
+		print("Hi")
+		var ranMove = randi_range(0,2)
+		if (ranMove == 0):
+			punch()
+		elif(ranMove == 1):
+			defend()
+		else:
+			dodge()
+			
 	regenStamina(delta)
 	reduceCooldown(delta)
 	healthLabel.text = str(health, ", ", stamina)
 	move_and_slide()
 	
 ############MOVEMENT FUNCTIONS#################
-func move(delta: float) -> void:
-	var moveDir = Input.get_axis("MoveLeft","MoveRight")
+func move(delta: float, playerDistane) -> void:
+	var moveDir = 0
+	if (position.x - playerPos.x > 5):
+		moveDir = -1
+	elif (position.x - playerPos.x < -5):
+		moveDir = 1
 	
 	#More complex movement
 	if (moveDir != 0):
@@ -110,44 +121,65 @@ func affectedByGravity(delta:float):
 func punch():
 	#This is to check if a move has been performed, that way the function doesn't end up eating the
 	# player's stamina
-	var hasMoveBeenPressed = Input.is_action_just_pressed("LowPunch") || Input.is_action_just_pressed("HighPunch")
-	if (hasMoveBeenPressed && stamina >= 2 && moveCooldown <= 0):
-		if (Input.is_action_just_pressed("LowPunch")):
+	var ranPunch = randi_range(0,1)
+	if (stamina >= 2 && moveCooldown <= 0):
+		if (ranPunch == 0):
 			print("LowPunch")
 			atkVal = 1
-		elif (Input.is_action_just_pressed("HighPunch")):
-			print("HighPunch")
+		else:
+			anim.animation = "HighPunch"
 			atkVal = 2
+		spawnPunch(atkVal, anim.get_playing_speed())
 		stamina -= 2
-		moveCooldown = 0.5
-
-func defend(delta):
-	if (tempTimer <= 0):
-		defVal = 2
 		moveCooldown = anim.get_playing_speed()
-		stamina -= 2
-		tempTimer = 3
+		
+func spawnPunch(_atkVal, _lifeSpan):
+	var createPunch = preload("res://Scenes/punch_projectile.tscn").instantiate()
+	
+	if (anim.flip_h):
+		createPunch.position.x -= $CollisionShape2D.shape.get_rect().size.x/2
 	else:
-		tempTimer -= delta
+		createPunch.position.x += $CollisionShape2D.shape.get_rect().size.x/2
+	createPunch.position.y += 25
+	createPunch.atkVal = atkVal
+	createPunch.lifeTimer = _lifeSpan
+	createPunch.source = sourceName
+	add_child(createPunch)
+
+func defend():
+	var ranDefend = randi_range(0,1)
+	if (stamina >= 3 && moveCooldown <= 0):
+		if (ranDefend == 0):
+			anim.animation = "LowBlock"
+			defVal = 1
+		else:
+			anim.animation = "HighBlock"
+			defVal = 2
+		
+		stamina -= 3
+		moveCooldown = anim.get_playing_speed()
 
 #The dodge function has a problem where dodging while moving left is weaker than dodging
 # when moving right
 func dodge():
-	if (Input.is_action_just_pressed("Dodge") && stamina >= 4 && moveCooldown <= 0):
-		print("Dodge")
-		stamina -= 4
-		defVal = 3
-		moveCooldown = 0.5
+	print("Dodge")
+	stamina -= 4
+	defVal = 3
+	moveCooldown = 0.5
+
+func hit(incomingAtkVal:int):
+	if (incomingAtkVal != atkVal && incomingAtkVal != defVal):
+		health -= 1
 
 #Function to reduce the value on the moveCooldown, works like a timer
 func reduceCooldown(delta:float):
-	if (moveCooldown > 0):
+	if (moveCooldown >= 0):
 		moveCooldown -= delta
 	else:
 		moveCooldown = 0
 		atkVal = 0
 		defVal = 0
-		
+		anim.animation = "Idle"
 
 #Function for regerating stamina
 func regenStamina(delta:float):
@@ -155,11 +187,6 @@ func regenStamina(delta:float):
 		stamina += regenRate * delta
 	else:
 		stamina = 4
-		
-func hit(incomingAtkVal:int):
-	if (incomingAtkVal != atkVal && incomingAtkVal != defVal):
-		health -= 1
-		
 ####################################################
 
 ###########ANIMATION FUNCTIONS######################
@@ -175,6 +202,4 @@ func moveAnimate(delta, moveDir):
 			anim.flip_h = true
 		elif (moveDir > 0):
 			anim.flip_h = false
-	else:
-		anim.animation = "Idle"
 ##################################################

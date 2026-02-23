@@ -1,16 +1,71 @@
 [gd_scene format=3 uid="uid://b67yxhjj6k3ik"]
 
 [ext_resource type="Script" uid="uid://b1wlj5rx1s64f" path="res://Scripts/Enemy/enemy.gd" id="1_0830c"]
+[ext_resource type="Texture2D" uid="uid://dc7pwi5ofsd3u" path="res://Sprites/PlayerSprites/HighBlock/High_block1.png" id="2_5xdhn"]
 [ext_resource type="Texture2D" uid="uid://dhcfv41d8j8r0" path="res://Sprites/PlayerSprites/Idle pngs/Idle animation1.png" id="2_ghaa6"]
 [ext_resource type="Texture2D" uid="uid://knpf1r1046d6" path="res://Sprites/PlayerSprites/Idle pngs/Idle animation2.png" id="3_1dp5w"]
+[ext_resource type="Texture2D" uid="uid://b2yc56tir308i" path="res://Sprites/PlayerSprites/HighBlock/High_block2.png" id="3_4jyny"]
 [ext_resource type="Texture2D" uid="uid://dhsklfydm8q14" path="res://Sprites/PlayerSprites/Idle pngs/Idle animation3.png" id="4_auwsv"]
+[ext_resource type="Texture2D" uid="uid://duwxlpjq6rgs3" path="res://Sprites/PlayerSprites/HighBlock/High_block3.png" id="4_vh8xy"]
 [ext_resource type="Texture2D" uid="uid://c5o8hxxqi5f6b" path="res://Sprites/PlayerSprites/Idle pngs/Idle animation4.png" id="5_8uf12"]
+[ext_resource type="Texture2D" uid="uid://c6i02ef7cy57a" path="res://Sprites/PlayerSprites/HighBlock/High_block4.png" id="5_qjcj6"]
+[ext_resource type="Texture2D" uid="uid://b0fqucwkkm1ci" path="res://Sprites/PlayerSprites/HighBlock/High_block5.png" id="6_4ycey"]
+[ext_resource type="Texture2D" uid="uid://b5ev3k8ui1lcd" path="res://Sprites/PlayerSprites/HighPunch/highpunch1.png" id="7_8cim4"]
+[ext_resource type="Texture2D" uid="uid://corpfs3m2pagp" path="res://Sprites/PlayerSprites/HighPunch/highpunch2.png" id="8_7x82w"]
+[ext_resource type="Texture2D" uid="uid://tm3a3nuvh0bs" path="res://Sprites/PlayerSprites/HighPunch/highpunch3.png" id="9_iatxd"]
+[ext_resource type="Texture2D" uid="uid://l5ijtr5estkb" path="res://Sprites/PlayerSprites/HighPunch/highpunch4.png" id="10_qqxsh"]
+[ext_resource type="Texture2D" uid="uid://boitmgrfk6pj5" path="res://Sprites/PlayerSprites/HighPunch/highpunch5.png" id="11_0whn2"]
+[ext_resource type="Texture2D" uid="uid://cas4sgtopl5l3" path="res://Sprites/PlayerSprites/LowBlock/Low_block1.png" id="16_bx1xr"]
+[ext_resource type="Texture2D" uid="uid://wiw70e0g1357" path="res://Sprites/PlayerSprites/LowBlock/Low_block2.png" id="17_n85mp"]
+[ext_resource type="Texture2D" uid="uid://b5xs6cv78qw67" path="res://Sprites/PlayerSprites/LowBlock/Low_block3.png" id="18_nxecp"]
+[ext_resource type="Texture2D" uid="uid://byuoo4lk2r0o0" path="res://Sprites/PlayerSprites/LowBlock/Low_block4.png" id="19_6jaer"]
+[ext_resource type="Texture2D" uid="uid://ossa6cg7iduc" path="res://Sprites/PlayerSprites/LowBlock/Low_block5.png" id="20_ve8xs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5p76"]
 size = Vector2(109, 160)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_g2qkg"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_5xdhn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_4jyny")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_vh8xy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_qjcj6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_4ycey")
+}],
+"loop": true,
+"name": &"HighBlock",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_8cim4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_7x82w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_iatxd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_qqxsh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_0whn2")
+}],
+"loop": true,
+"name": &"HighPunch",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_ghaa6")
@@ -27,6 +82,26 @@ animations = [{
 "loop": true,
 "name": &"Idle",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("16_bx1xr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_n85mp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_nxecp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_6jaer")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_ve8xs")
+}],
+"loop": true,
+"name": &"LowBlock",
+"speed": 5.0
 }]
 
 [node name="Enemy" type="CharacterBody2D" unique_id=425400130]
@@ -39,7 +114,7 @@ shape = SubResource("RectangleShape2D_q5p76")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1750818118]
 scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_g2qkg")
-animation = &"Idle"
+animation = &"HighPunch"
 
 [node name="Health" type="Label" parent="." unique_id=2009518256]
 offset_left = -28.0
