@@ -13,8 +13,12 @@ var sourceName = "Player"
 
 @export var stamina = 4
 @export var regenRate = 1
-var soundArr = []
-enum sounds{HighPunch,LowPunch,Block,BlockPunch,GetHit,Dodge}
+var LowPunch
+var HighPunch
+var Block
+var BlockPunch
+var GetHit
+var Dodge
 #atkVal and defVal are used for comparing the high/low blocks/punches between the players
 # 0 - means nothing
 # 1 - means low block/attack
@@ -37,7 +41,12 @@ func _ready() -> void:
 	anim = $AnimatedSprite2D
 	anim.animation = "Idle"
 	anim.play()
-
+	LowPunch = $LowPunch
+	HighPunch = $HighPunch
+	Block = $Block
+	BlockPunch = $BlockPunch
+	GetHit = $GetHit
+	Dodge = $Dodge
 
 func _physics_process(delta: float) -> void:
 	move(delta)
@@ -108,9 +117,11 @@ func punch():
 	if (hasMoveBeenPressed && stamina >= 2 && moveCooldown <= 0):
 		if (Input.is_action_just_pressed("LowPunch")):
 			anim.animation = "LowPunch"
+			LowPunch.play()
 			atkVal = 1
 		elif (Input.is_action_just_pressed("HighPunch")):
 			anim.animation = "HighPunch"
+			HighPunch.play()
 			atkVal = 2
 		spawnPunch(atkVal, anim.get_playing_speed())
 		stamina -= 2
@@ -138,7 +149,7 @@ func defend():
 		elif (Input.is_action_just_pressed("HighBlock")):
 			anim.animation = "HighBlock"
 			defVal = 2
-		
+		Block.play()
 		stamina -= 3
 		moveCooldown = anim.get_playing_speed()
 
@@ -147,13 +158,17 @@ func defend():
 func dodge():
 	if (Input.is_action_just_pressed("Dodge") && stamina >= 4 && moveCooldown <= 0):
 		anim.animation = "Dodge"
+		Dodge.play()
 		stamina -= 4
 		defVal = 3
 		moveCooldown = anim.get_playing_speed()
 
 func hit(incomingAtkVal:int):
-	if (incomingAtkVal != atkVal && incomingAtkVal != defVal):
+	if (incomingAtkVal != atkVal && incomingAtkVal != defVal && defVal != 3):
+		GetHit.play()
 		health -= 1
+	elif (incomingAtkVal == defVal):
+		BlockPunch.play()
 
 #Function to reduce the value on the moveCooldown, works like a timer
 func reduceCooldown(delta:float):

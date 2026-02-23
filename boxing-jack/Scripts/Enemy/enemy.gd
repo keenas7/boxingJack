@@ -30,6 +30,13 @@ var moveCooldown = 0
 var healthLabel
 var anim
 
+var LowPunch
+var HighPunch
+var Block
+var BlockPunch
+var GetHit
+var Dodge
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	healthLabel = $Health
@@ -37,6 +44,12 @@ func _ready() -> void:
 	anim = $AnimatedSprite2D
 	anim.animation = "Idle"
 	anim.play()
+	LowPunch = $LowPunch
+	HighPunch = $HighPunch
+	Block = $Block
+	BlockPunch = $BlockPunch
+	GetHit = $GetHit
+	Dodge = $Dodge
 
 
 func _physics_process(delta: float) -> void:
@@ -47,9 +60,9 @@ func _physics_process(delta: float) -> void:
 	#print(playerDistance)
 	if (playerDistance > -110 && playerDistance < 110 && stamina >= 4):
 		var ranMove = randi_range(0,2)
-		if (ranMove == 0):
+		if (false):
 			punch()
-		elif(ranMove == 1):
+		elif(false):
 			defend()
 		else:
 			dodge()
@@ -120,9 +133,11 @@ func punch():
 	if (stamina >= 2 && moveCooldown <= 0):
 		if (ranPunch == 0):
 			anim.animation = "LowPunch"
+			LowPunch.play()
 			atkVal = 1
 		else:
 			anim.animation = "HighPunch"
+			HighPunch.play()
 			atkVal = 2
 		spawnPunch(atkVal, anim.get_playing_speed())
 		stamina -= 2
@@ -150,7 +165,7 @@ func defend():
 		else:
 			anim.animation = "HighBlock"
 			defVal = 2
-		
+		Block.play()
 		stamina -= 3
 		moveCooldown = anim.get_playing_speed()
 
@@ -158,13 +173,17 @@ func defend():
 # when moving right
 func dodge():
 	anim.animation = "Dodge"
+	Dodge.play()
 	stamina -= 4
 	defVal = 3
 	moveCooldown = anim.get_playing_speed()
 
 func hit(incomingAtkVal:int):
-	if (incomingAtkVal != atkVal && incomingAtkVal != defVal):
+	if (incomingAtkVal != atkVal && incomingAtkVal != defVal && defVal != 3):
+		GetHit.play()
 		health -= 1
+	elif(incomingAtkVal == defVal):
+		BlockPunch.play()
 
 #Function to reduce the value on the moveCooldown, works like a timer
 func reduceCooldown(delta:float):

@@ -34,6 +34,7 @@
 [ext_resource type="AudioStream" uid="uid://bdljwaax36bhe" path="res://Sounds/blocking a punch.ogg" id="32_xede8"]
 [ext_resource type="AudioStream" uid="uid://gqgwb26h4vui" path="res://Sounds/dodge.ogg" id="34_1jc2k"]
 [ext_resource type="AudioStream" uid="uid://uqplis3vksu2" path="res://Sounds/Hit4.ogg" id="35_vnagx"]
+[ext_resource type="AudioStream" uid="uid://cqfm67yk73xbq" path="res://Sounds/lowhit.ogg" id="36_45wir"]
 [ext_resource type="AudioStream" uid="uid://dngurdnxwtd2a" path="res://Sounds/pressing-block.ogg" id="37_ljnpn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5p76"]
@@ -181,6 +182,7 @@ horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="LowPunch" type="AudioStreamPlayer2D" parent="." unique_id=205175623]
+stream = ExtResource("36_45wir")
 
 [node name="HighPunch" type="AudioStreamPlayer2D" parent="." unique_id=829005593]
 stream = ExtResource("31_1hkxw")
@@ -196,3 +198,4 @@ stream = ExtResource("35_vnagx")
 
 [node name="Dodge" type="AudioStreamPlayer2D" parent="." unique_id=275440328]
 stream = ExtResource("34_1jc2k")
+volume_db = -20.204
