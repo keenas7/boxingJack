@@ -57,3 +57,23 @@ position = Vector2(100, 334)
 
 [node name="EnemySpawn" type="Node2D" parent="." unique_id=1644805019]
 position = Vector2(1071, 330)
+
+[node name="ButtonLayer" type="CanvasLayer" parent="." unique_id=1465467652]
+
+[node name="Retry" type="Button" parent="ButtonLayer" unique_id=273211620]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -208.0
+offset_top = -133.0
+offset_right = 218.0
+offset_bottom = 112.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 64
+disabled = true
+text = "Retry"
+
+[connection signal="pressed" from="ButtonLayer/Retry" to="." method="_on_retry_pressed"]

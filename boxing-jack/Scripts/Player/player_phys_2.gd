@@ -57,7 +57,7 @@ func _physics_process(delta: float) -> void:
 	dodge()
 	regenStamina(delta)
 	reduceCooldown(delta)
-	healthLabel.text = str(health, ", ", stamina)
+	healthLabel.text = str("Health: ", health, "\nStamina: ", round(stamina))
 	move_and_slide()
 	
 ############MOVEMENT FUNCTIONS#################

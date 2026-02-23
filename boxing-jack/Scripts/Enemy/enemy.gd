@@ -60,16 +60,16 @@ func _physics_process(delta: float) -> void:
 	#print(playerDistance)
 	if (playerDistance > -110 && playerDistance < 110 && stamina >= 4):
 		var ranMove = randi_range(0,2)
-		if (false):
+		if (0):
 			punch()
-		elif(false):
+		elif(1):
 			defend()
 		else:
 			dodge()
 			
 	regenStamina(delta)
 	reduceCooldown(delta)
-	healthLabel.text = str(health, ", ", stamina)
+	healthLabel.text = str("Health: ", health, "\nStamina: ", round(stamina))
 	move_and_slide()
 	
 ############MOVEMENT FUNCTIONS#################

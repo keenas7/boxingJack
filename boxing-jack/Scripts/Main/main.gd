@@ -1,6 +1,7 @@
 extends Node
 var player
 var enemy
+var retryButton
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -11,8 +12,19 @@ func _ready() -> void:
 	enemy = preload("res://Scenes/enemy.tscn").instantiate()
 	enemy.position = $EnemySpawn.position
 	add_child(enemy)
+	
+	retryButton = $ButtonLayer/Retry
+	retryButton.hide()
+	retryButton.disabled = true
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	enemy.playerPos = player.position
+	if (player.health <= 0 || enemy.health <= 0):
+		retryButton.show()
+		retryButton.disabled = false
+
+func _on_retry_pressed() -> void:
+	#Code taken from here: https://forum.godotengine.org/t/reloading-a-scene/11896/3 
+	get_tree().reload_current_scene()
