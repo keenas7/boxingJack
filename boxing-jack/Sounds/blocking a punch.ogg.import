@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bdljwaax36bhe"
+path="res://.godot/imported/blocking a punch.ogg-c08865d51389279f83aa5ad1c0dc90f3.oggvorbisstr"
+
+[deps]
+
+source_file="res://Sounds/blocking a punch.ogg"
+dest_files=["res://.godot/imported/blocking a punch.ogg-c08865d51389279f83aa5ad1c0dc90f3.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -39,18 +39,13 @@ func _ready() -> void:
 	anim.play()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
 func _physics_process(delta: float) -> void:
 	var playerDistance = position.x - playerPos.x
 	move(delta, playerDistance)
 	#jump()
 	affectedByGravity(delta)
-	print(playerDistance)
+	#print(playerDistance)
 	if (playerDistance > -110 && playerDistance < 110 && stamina >= 4):
-		print("Hi")
 		var ranMove = randi_range(0,2)
 		if (ranMove == 0):
 			punch()
@@ -65,11 +60,11 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 ############MOVEMENT FUNCTIONS#################
-func move(delta: float, playerDistane) -> void:
+func move(delta: float, playerDistance) -> void:
 	var moveDir = 0
-	if (position.x - playerPos.x > 5):
+	if (playerDistance > 5):
 		moveDir = -1
-	elif (position.x - playerPos.x < -5):
+	elif (playerDistance < -5):
 		moveDir = 1
 	
 	#More complex movement
@@ -85,7 +80,7 @@ func move(delta: float, playerDistane) -> void:
 		if (abs(velocity.x) < MAX_SPEED):
 			velocity.x += accel * moveDir * delta
 		else:
-			velocity.x -= accel * moveDir * delta
+			velocity.x = MAX_SPEED * moveDir
 	else:
 		#This makes the player slow down, and prevents them from "jittering"
 		# when their speed reaches 0, as the constant addition and
@@ -99,7 +94,7 @@ func move(delta: float, playerDistane) -> void:
 			velocity.x += accel*2 * delta
 		else:
 			velocity.x = 0
-	moveAnimate(delta,moveDir)
+	moveAnimate(moveDir)
 	
 
 func jump():
@@ -124,7 +119,7 @@ func punch():
 	var ranPunch = randi_range(0,1)
 	if (stamina >= 2 && moveCooldown <= 0):
 		if (ranPunch == 0):
-			print("LowPunch")
+			anim.animation = "LowPunch"
 			atkVal = 1
 		else:
 			anim.animation = "HighPunch"
@@ -162,10 +157,10 @@ func defend():
 #The dodge function has a problem where dodging while moving left is weaker than dodging
 # when moving right
 func dodge():
-	print("Dodge")
+	anim.animation = "Dodge"
 	stamina -= 4
 	defVal = 3
-	moveCooldown = 0.5
+	moveCooldown = anim.get_playing_speed()
 
 func hit(incomingAtkVal:int):
 	if (incomingAtkVal != atkVal && incomingAtkVal != defVal):
@@ -190,7 +185,7 @@ func regenStamina(delta:float):
 ####################################################
 
 ###########ANIMATION FUNCTIONS######################
-func moveAnimate(delta, moveDir):
+func moveAnimate(moveDir):
 	#This will be how we control the different animations for movement
 	if (moveDir != 0):
 		#Here as a placeholder

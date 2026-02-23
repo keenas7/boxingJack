@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://yd10g5cw400t"]
 
 [ext_resource type="Script" uid="uid://c6eiwuhxmlevs" path="res://Scripts/Main/main.gd" id="1_jjgbg"]
+[ext_resource type="Texture2D" uid="uid://4orb6txqdosa" path="res://Sprites/Background/Audience.png" id="2_8gbba"]
+[ext_resource type="Texture2D" uid="uid://bf58u7b6hy7co" path="res://Sprites/Background/BoxingRing.png" id="2_bo1nx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jjgbg"]
 size = Vector2(1337, 197)
@@ -14,6 +16,12 @@ size = Vector2(63, 461)
 [node name="Main" type="Node" unique_id=1582123276]
 script = ExtResource("1_jjgbg")
 
+[node name="Background" type="Sprite2D" parent="." unique_id=1201060709]
+z_index = -2
+position = Vector2(575.5, 289.00003)
+scale = Vector2(9.0390625, 6.1250005)
+texture = ExtResource("2_8gbba")
+
 [node name="BoxingRing" type="StaticBody2D" parent="." unique_id=1966180480]
 position = Vector2(220, 475)
 metadata/_edit_group_ = true
@@ -21,6 +29,12 @@ metadata/_edit_group_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BoxingRing" unique_id=2064049282]
 position = Vector2(353.5, 73.5)
 shape = SubResource("RectangleShape2D_jjgbg")
+
+[node name="Sprite2D" type="Sprite2D" parent="BoxingRing" unique_id=1767041441]
+z_index = -1
+position = Vector2(353.00003, -790.5)
+scale = Vector2(1.06875, 1.5023438)
+texture = ExtResource("2_bo1nx")
 
 [node name="LeftWall" type="StaticBody2D" parent="." unique_id=1070182560]
 position = Vector2(-130, 413)

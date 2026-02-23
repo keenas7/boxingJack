@@ -4,28 +4,63 @@
 [ext_resource type="Texture2D" uid="uid://dhcfv41d8j8r0" path="res://Sprites/PlayerSprites/Idle pngs/Idle animation1.png" id="2_43ji5"]
 [ext_resource type="Texture2D" uid="uid://dc7pwi5ofsd3u" path="res://Sprites/PlayerSprites/HighBlock/High_block1.png" id="2_acxmr"]
 [ext_resource type="Texture2D" uid="uid://b5ev3k8ui1lcd" path="res://Sprites/PlayerSprites/HighPunch/highpunch1.png" id="2_q5p76"]
+[ext_resource type="Texture2D" uid="uid://btd1slkwocb66" path="res://Sprites/PlayerSprites/Dodge/Dodge1.png" id="2_surt0"]
+[ext_resource type="Texture2D" uid="uid://dy0pnd6sofph3" path="res://Sprites/PlayerSprites/Dodge/Dodge2.png" id="3_1hkxw"]
 [ext_resource type="Texture2D" uid="uid://b2yc56tir308i" path="res://Sprites/PlayerSprites/HighBlock/High_block2.png" id="3_8naot"]
 [ext_resource type="Texture2D" uid="uid://corpfs3m2pagp" path="res://Sprites/PlayerSprites/HighPunch/highpunch2.png" id="3_g2qkg"]
 [ext_resource type="Texture2D" uid="uid://knpf1r1046d6" path="res://Sprites/PlayerSprites/Idle pngs/Idle animation2.png" id="3_yinys"]
+[ext_resource type="Texture2D" uid="uid://c22kibsn5glcc" path="res://Sprites/PlayerSprites/Dodge/Dodge3.png" id="4_4agwf"]
 [ext_resource type="Texture2D" uid="uid://tm3a3nuvh0bs" path="res://Sprites/PlayerSprites/HighPunch/highpunch3.png" id="4_65tol"]
 [ext_resource type="Texture2D" uid="uid://dhsklfydm8q14" path="res://Sprites/PlayerSprites/Idle pngs/Idle animation3.png" id="4_kx3js"]
 [ext_resource type="Texture2D" uid="uid://duwxlpjq6rgs3" path="res://Sprites/PlayerSprites/HighBlock/High_block3.png" id="4_v14pw"]
 [ext_resource type="Texture2D" uid="uid://l5ijtr5estkb" path="res://Sprites/PlayerSprites/HighPunch/highpunch4.png" id="5_1iccj"]
 [ext_resource type="Texture2D" uid="uid://c5o8hxxqi5f6b" path="res://Sprites/PlayerSprites/Idle pngs/Idle animation4.png" id="5_8a76v"]
 [ext_resource type="Texture2D" uid="uid://c6i02ef7cy57a" path="res://Sprites/PlayerSprites/HighBlock/High_block4.png" id="5_g2irx"]
+[ext_resource type="Texture2D" uid="uid://cc6cs8te8ijur" path="res://Sprites/PlayerSprites/Dodge/Dodge4.png" id="5_i86nb"]
 [ext_resource type="Texture2D" uid="uid://b0fqucwkkm1ci" path="res://Sprites/PlayerSprites/HighBlock/High_block5.png" id="6_8oh70"]
+[ext_resource type="Texture2D" uid="uid://f8u44hhk88j0" path="res://Sprites/PlayerSprites/Dodge/Dodge5.png" id="6_dtvqj"]
 [ext_resource type="Texture2D" uid="uid://boitmgrfk6pj5" path="res://Sprites/PlayerSprites/HighPunch/highpunch5.png" id="6_n3q60"]
 [ext_resource type="Texture2D" uid="uid://cas4sgtopl5l3" path="res://Sprites/PlayerSprites/LowBlock/Low_block1.png" id="16_ndbka"]
 [ext_resource type="Texture2D" uid="uid://wiw70e0g1357" path="res://Sprites/PlayerSprites/LowBlock/Low_block2.png" id="17_bda76"]
 [ext_resource type="Texture2D" uid="uid://b5xs6cv78qw67" path="res://Sprites/PlayerSprites/LowBlock/Low_block3.png" id="18_0wa0p"]
 [ext_resource type="Texture2D" uid="uid://byuoo4lk2r0o0" path="res://Sprites/PlayerSprites/LowBlock/Low_block4.png" id="19_t70rc"]
 [ext_resource type="Texture2D" uid="uid://ossa6cg7iduc" path="res://Sprites/PlayerSprites/LowBlock/Low_block5.png" id="20_maj78"]
+[ext_resource type="Texture2D" uid="uid://d2urlhyy1ndc3" path="res://Sprites/PlayerSprites/LowPunch/lowpunch1.png" id="26_dpwgl"]
+[ext_resource type="Texture2D" uid="uid://71n62lgweoa3" path="res://Sprites/PlayerSprites/LowPunch/lowpunch2.png" id="27_j4m80"]
+[ext_resource type="Texture2D" uid="uid://47hiaesawsun" path="res://Sprites/PlayerSprites/LowPunch/lowpunch3.png" id="28_xede8"]
+[ext_resource type="Texture2D" uid="uid://ccqyqhtxtj1kl" path="res://Sprites/PlayerSprites/LowPunch/lowpunch4.png" id="29_g451k"]
+[ext_resource type="Texture2D" uid="uid://cqi1i1ebpqojl" path="res://Sprites/PlayerSprites/LowPunch/lowpunch5.png" id="30_1jc2k"]
+[ext_resource type="AudioStream" uid="uid://duxod1nl6bm6e" path="res://Sounds/highhit2.ogg" id="31_1hkxw"]
+[ext_resource type="AudioStream" uid="uid://bdljwaax36bhe" path="res://Sounds/blocking a punch.ogg" id="32_xede8"]
+[ext_resource type="AudioStream" uid="uid://gqgwb26h4vui" path="res://Sounds/dodge.ogg" id="34_1jc2k"]
+[ext_resource type="AudioStream" uid="uid://uqplis3vksu2" path="res://Sounds/Hit4.ogg" id="35_vnagx"]
+[ext_resource type="AudioStream" uid="uid://dngurdnxwtd2a" path="res://Sounds/pressing-block.ogg" id="37_ljnpn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5p76"]
 size = Vector2(109, 160)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_g2qkg"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_surt0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_1hkxw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_4agwf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_i86nb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_dtvqj")
+}],
+"loop": true,
+"name": &"Dodge",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_acxmr")
@@ -102,6 +137,26 @@ animations = [{
 "loop": true,
 "name": &"LowBlock",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("26_dpwgl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_j4m80")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_xede8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_g451k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_1jc2k")
+}],
+"loop": true,
+"name": &"LowPunch",
+"speed": 5.0
 }]
 
 [node name="Player_Phys_2" type="CharacterBody2D" unique_id=425400130]
@@ -114,7 +169,7 @@ shape = SubResource("RectangleShape2D_q5p76")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1750818118]
 scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_g2qkg")
-animation = &"HighPunch"
+animation = &"LowPunch"
 
 [node name="Health" type="Label" parent="." unique_id=2009518256]
 offset_left = -28.0
@@ -124,3 +179,20 @@ offset_bottom = -41.0
 text = "3"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="LowPunch" type="AudioStreamPlayer2D" parent="." unique_id=205175623]
+
+[node name="HighPunch" type="AudioStreamPlayer2D" parent="." unique_id=829005593]
+stream = ExtResource("31_1hkxw")
+
+[node name="Block" type="AudioStreamPlayer2D" parent="." unique_id=1272616620]
+stream = ExtResource("37_ljnpn")
+
+[node name="BlockPunch" type="AudioStreamPlayer2D" parent="." unique_id=551845757]
+stream = ExtResource("32_xede8")
+
+[node name="GetHit" type="AudioStreamPlayer2D" parent="." unique_id=1913455794]
+stream = ExtResource("35_vnagx")
+
+[node name="Dodge" type="AudioStreamPlayer2D" parent="." unique_id=275440328]
+stream = ExtResource("34_1jc2k")

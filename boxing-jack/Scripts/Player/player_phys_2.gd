@@ -13,7 +13,8 @@ var sourceName = "Player"
 
 @export var stamina = 4
 @export var regenRate = 1
-
+var soundArr = []
+enum sounds{HighPunch,LowPunch,Block,BlockPunch,GetHit,Dodge}
 #atkVal and defVal are used for comparing the high/low blocks/punches between the players
 # 0 - means nothing
 # 1 - means low block/attack
@@ -37,10 +38,6 @@ func _ready() -> void:
 	anim.animation = "Idle"
 	anim.play()
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 func _physics_process(delta: float) -> void:
 	move(delta)
@@ -71,7 +68,7 @@ func move(delta: float) -> void:
 		if (abs(velocity.x) < MAX_SPEED):
 			velocity.x += accel * moveDir * delta
 		else:
-			velocity.x -= accel * moveDir * delta
+			velocity.x = MAX_SPEED * moveDir
 	else:
 		#This makes the player slow down, and prevents them from "jittering"
 		# when their speed reaches 0, as the constant addition and
@@ -85,7 +82,7 @@ func move(delta: float) -> void:
 			velocity.x += accel*2 * delta
 		else:
 			velocity.x = 0
-	moveAnimate(delta,moveDir)
+	moveAnimate(moveDir)
 	
 
 func jump():
@@ -110,7 +107,7 @@ func punch():
 	var hasMoveBeenPressed = Input.is_action_just_pressed("LowPunch") || Input.is_action_just_pressed("HighPunch")
 	if (hasMoveBeenPressed && stamina >= 2 && moveCooldown <= 0):
 		if (Input.is_action_just_pressed("LowPunch")):
-			print("LowPunch")
+			anim.animation = "LowPunch"
 			atkVal = 1
 		elif (Input.is_action_just_pressed("HighPunch")):
 			anim.animation = "HighPunch"
@@ -149,10 +146,10 @@ func defend():
 # when moving right
 func dodge():
 	if (Input.is_action_just_pressed("Dodge") && stamina >= 4 && moveCooldown <= 0):
-		print("Dodge")
+		anim.animation = "Dodge"
 		stamina -= 4
 		defVal = 3
-		moveCooldown = 0.5
+		moveCooldown = anim.get_playing_speed()
 
 func hit(incomingAtkVal:int):
 	if (incomingAtkVal != atkVal && incomingAtkVal != defVal):
@@ -177,7 +174,7 @@ func regenStamina(delta:float):
 ####################################################
 
 ###########ANIMATION FUNCTIONS######################
-func moveAnimate(delta, moveDir):
+func moveAnimate(moveDir):
 	#This will be how we control the different animations for movement
 	if (moveDir != 0):
 		#Here as a placeholder
