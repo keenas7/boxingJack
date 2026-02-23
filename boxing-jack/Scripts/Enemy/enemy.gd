@@ -60,9 +60,9 @@ func _physics_process(delta: float) -> void:
 	#print(playerDistance)
 	if (playerDistance > -110 && playerDistance < 110 && stamina >= 4):
 		var ranMove = randi_range(0,2)
-		if (0):
+		if (ranMove == 0):
 			punch()
-		elif(1):
+		elif(ranMove == 1):
 			defend()
 		else:
 			dodge()
