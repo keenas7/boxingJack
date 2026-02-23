@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 const MAX_SPEED = 250
 
-var sourceName = "Player"
+var sourceName = "Enemy"
 @export var health = 3
 @export var speed = 0
 @export var accel = 400
@@ -10,6 +10,7 @@ var sourceName = "Player"
 @export var gravityMul = 0.5
 @export var dodgeForceX = -250
 @export var dodgeForceY = -50
+var tempTimer = 3
 
 @export var stamina = 4
 @export var regenRate = 1
@@ -29,6 +30,8 @@ var moveCooldown = 0
 var healthLabel
 var anim
 
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	healthLabel = $Health
@@ -43,12 +46,12 @@ func _process(delta: float) -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
-	move(delta)
-	jump()
+	#move(delta)
+	#jump()
 	affectedByGravity(delta)
-	punch()
-	defend()
-	dodge()
+	#punch()
+	defend(delta)
+	#dodge()
 	regenStamina(delta)
 	reduceCooldown(delta)
 	healthLabel.text = str(health, ", ", stamina)
@@ -113,37 +116,19 @@ func punch():
 			print("LowPunch")
 			atkVal = 1
 		elif (Input.is_action_just_pressed("HighPunch")):
-			anim.animation = "HighPunch"
+			print("HighPunch")
 			atkVal = 2
-		spawnPunch(atkVal, anim.get_playing_speed())
 		stamina -= 2
-		moveCooldown = anim.get_playing_speed()
-		
-func spawnPunch(_atkVal, _lifeSpan):
-	var createPunch = preload("res://Scenes/punch_projectile.tscn").instantiate()
-	
-	if (anim.flip_h):
-		createPunch.position.x -= $CollisionShape2D.shape.get_rect().size.x/2
-	else:
-		createPunch.position.x += $CollisionShape2D.shape.get_rect().size.x/2
-	createPunch.position.y += 25
-	createPunch.atkVal = atkVal
-	createPunch.lifeTimer = _lifeSpan
-	createPunch.source = sourceName
-	add_child(createPunch)
+		moveCooldown = 0.5
 
-func defend():
-	var hasMoveBeenPressed = Input.is_action_just_pressed("LowBlock") || Input.is_action_just_pressed("HighBlock")
-	if (hasMoveBeenPressed && stamina >= 3 && moveCooldown <= 0):
-		if (Input.is_action_just_pressed("LowBlock")):
-			anim.animation = "LowBlock"
-			defVal = 1
-		elif (Input.is_action_just_pressed("HighBlock")):
-			anim.animation = "HighBlock"
-			defVal = 2
-		
-		stamina -= 3
+func defend(delta):
+	if (tempTimer <= 0):
+		defVal = 2
 		moveCooldown = anim.get_playing_speed()
+		stamina -= 2
+		tempTimer = 3
+	else:
+		tempTimer -= delta
 
 #The dodge function has a problem where dodging while moving left is weaker than dodging
 # when moving right
@@ -154,19 +139,15 @@ func dodge():
 		defVal = 3
 		moveCooldown = 0.5
 
-func hit(incomingAtkVal:int):
-	if (incomingAtkVal != atkVal && incomingAtkVal != defVal):
-		health -= 1
-
 #Function to reduce the value on the moveCooldown, works like a timer
 func reduceCooldown(delta:float):
-	if (moveCooldown >= 0):
+	if (moveCooldown > 0):
 		moveCooldown -= delta
 	else:
 		moveCooldown = 0
 		atkVal = 0
 		defVal = 0
-		anim.animation = "Idle"
+		
 
 #Function for regerating stamina
 func regenStamina(delta:float):
@@ -174,6 +155,11 @@ func regenStamina(delta:float):
 		stamina += regenRate * delta
 	else:
 		stamina = 4
+		
+func hit(incomingAtkVal:int):
+	if (incomingAtkVal != atkVal && incomingAtkVal != defVal):
+		health -= 1
+		
 ####################################################
 
 ###########ANIMATION FUNCTIONS######################
@@ -189,4 +175,6 @@ func moveAnimate(delta, moveDir):
 			anim.flip_h = true
 		elif (moveDir > 0):
 			anim.flip_h = false
+	else:
+		anim.animation = "Idle"
 ##################################################

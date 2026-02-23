@@ -2,15 +2,70 @@
 
 [ext_resource type="Script" uid="uid://bb7l834dtn1if" path="res://Scripts/Player/player_phys_2.gd" id="1_rocbt"]
 [ext_resource type="Texture2D" uid="uid://dhcfv41d8j8r0" path="res://Sprites/PlayerSprites/Idle pngs/Idle animation1.png" id="2_43ji5"]
+[ext_resource type="Texture2D" uid="uid://dc7pwi5ofsd3u" path="res://Sprites/PlayerSprites/HighBlock/High_block1.png" id="2_acxmr"]
+[ext_resource type="Texture2D" uid="uid://b5ev3k8ui1lcd" path="res://Sprites/PlayerSprites/HighPunch/highpunch1.png" id="2_q5p76"]
+[ext_resource type="Texture2D" uid="uid://b2yc56tir308i" path="res://Sprites/PlayerSprites/HighBlock/High_block2.png" id="3_8naot"]
+[ext_resource type="Texture2D" uid="uid://corpfs3m2pagp" path="res://Sprites/PlayerSprites/HighPunch/highpunch2.png" id="3_g2qkg"]
 [ext_resource type="Texture2D" uid="uid://knpf1r1046d6" path="res://Sprites/PlayerSprites/Idle pngs/Idle animation2.png" id="3_yinys"]
+[ext_resource type="Texture2D" uid="uid://tm3a3nuvh0bs" path="res://Sprites/PlayerSprites/HighPunch/highpunch3.png" id="4_65tol"]
 [ext_resource type="Texture2D" uid="uid://dhsklfydm8q14" path="res://Sprites/PlayerSprites/Idle pngs/Idle animation3.png" id="4_kx3js"]
+[ext_resource type="Texture2D" uid="uid://duwxlpjq6rgs3" path="res://Sprites/PlayerSprites/HighBlock/High_block3.png" id="4_v14pw"]
+[ext_resource type="Texture2D" uid="uid://l5ijtr5estkb" path="res://Sprites/PlayerSprites/HighPunch/highpunch4.png" id="5_1iccj"]
 [ext_resource type="Texture2D" uid="uid://c5o8hxxqi5f6b" path="res://Sprites/PlayerSprites/Idle pngs/Idle animation4.png" id="5_8a76v"]
+[ext_resource type="Texture2D" uid="uid://c6i02ef7cy57a" path="res://Sprites/PlayerSprites/HighBlock/High_block4.png" id="5_g2irx"]
+[ext_resource type="Texture2D" uid="uid://b0fqucwkkm1ci" path="res://Sprites/PlayerSprites/HighBlock/High_block5.png" id="6_8oh70"]
+[ext_resource type="Texture2D" uid="uid://boitmgrfk6pj5" path="res://Sprites/PlayerSprites/HighPunch/highpunch5.png" id="6_n3q60"]
+[ext_resource type="Texture2D" uid="uid://cas4sgtopl5l3" path="res://Sprites/PlayerSprites/LowBlock/Low_block1.png" id="16_ndbka"]
+[ext_resource type="Texture2D" uid="uid://wiw70e0g1357" path="res://Sprites/PlayerSprites/LowBlock/Low_block2.png" id="17_bda76"]
+[ext_resource type="Texture2D" uid="uid://b5xs6cv78qw67" path="res://Sprites/PlayerSprites/LowBlock/Low_block3.png" id="18_0wa0p"]
+[ext_resource type="Texture2D" uid="uid://byuoo4lk2r0o0" path="res://Sprites/PlayerSprites/LowBlock/Low_block4.png" id="19_t70rc"]
+[ext_resource type="Texture2D" uid="uid://ossa6cg7iduc" path="res://Sprites/PlayerSprites/LowBlock/Low_block5.png" id="20_maj78"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5p76"]
 size = Vector2(109, 160)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_g2qkg"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_acxmr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_8naot")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_v14pw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_g2irx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_8oh70")
+}],
+"loop": true,
+"name": &"HighBlock",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_q5p76")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_g2qkg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_65tol")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_1iccj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_n3q60")
+}],
+"loop": true,
+"name": &"HighPunch",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_43ji5")
@@ -27,6 +82,26 @@ animations = [{
 "loop": true,
 "name": &"Idle",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("16_ndbka")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_bda76")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_0wa0p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_t70rc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_maj78")
+}],
+"loop": true,
+"name": &"LowBlock",
+"speed": 5.0
 }]
 
 [node name="Player_Phys_2" type="CharacterBody2D" unique_id=425400130]
@@ -39,7 +114,7 @@ shape = SubResource("RectangleShape2D_q5p76")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1750818118]
 scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_g2qkg")
-animation = &"Idle"
+animation = &"HighPunch"
 
 [node name="Health" type="Label" parent="." unique_id=2009518256]
 offset_left = -28.0
@@ -48,3 +123,4 @@ offset_right = 40.0
 offset_bottom = -41.0
 text = "3"
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true

@@ -40,3 +40,6 @@ shape = SubResource("RectangleShape2D_8gbba")
 
 [node name="PlayerSpawn" type="Node2D" parent="." unique_id=1089993190]
 position = Vector2(100, 334)
+
+[node name="EnemySpawn" type="Node2D" parent="." unique_id=1644805019]
+position = Vector2(1071, 330)

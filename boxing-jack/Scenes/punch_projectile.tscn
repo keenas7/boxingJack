@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://dcxmhfmchjq34"]
+
+[ext_resource type="Script" uid="uid://cpmfya7tv621k" path="res://Scripts/Attack/punch_projectile.gd" id="1_5452q"]
+[ext_resource type="Texture2D" uid="uid://db4ftunslbgro" path="res://icon.svg" id="2_2x212"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l8nw3"]
+size = Vector2(37, 143)
+
+[node name="PunchProjectile" type="Area2D" unique_id=1781119834]
+script = ExtResource("1_5452q")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1144590558]
+visible = false
+position = Vector2(0.5, -0.9999981)
+scale = Vector2(0.28906238, 1.125)
+texture = ExtResource("2_2x212")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=289798988]
+position = Vector2(0.5, -1.5)
+shape = SubResource("RectangleShape2D_l8nw3")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
