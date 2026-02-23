@@ -24,6 +24,11 @@ func _process(delta: float) -> void:
 	if (player.health <= 0 || enemy.health <= 0):
 		retryButton.show()
 		retryButton.disabled = false
+		
+		#Send player and enemy into the void, where they can't be heard
+		# (That's pretty dark)
+		player.position = Vector2(-2100,2100)
+		enemy.position = Vector2(2100,-2100)
 
 func _on_retry_pressed() -> void:
 	#Code taken from here: https://forum.godotengine.org/t/reloading-a-scene/11896/3 
