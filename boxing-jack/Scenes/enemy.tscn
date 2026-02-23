@@ -38,7 +38,7 @@
 [ext_resource type="AudioStream" uid="uid://gqgwb26h4vui" path="res://Sounds/dodge.ogg" id="36_bwheg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5p76"]
-size = Vector2(109, 160)
+size = Vector2(79, 121)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_g2qkg"]
 animations = [{
@@ -164,7 +164,7 @@ animations = [{
 script = ExtResource("1_0830c")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1840348857]
-position = Vector2(-1.5, 78)
+position = Vector2(-16.5, 58.5)
 shape = SubResource("RectangleShape2D_q5p76")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1750818118]

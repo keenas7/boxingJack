@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://db4ftunslbgro" path="res://icon.svg" id="2_2x212"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l8nw3"]
-size = Vector2(37, 143)
+size = Vector2(37, 77)
 
 [node name="PunchProjectile" type="Area2D" unique_id=1781119834]
 script = ExtResource("1_5452q")
