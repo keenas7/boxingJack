@@ -123,9 +123,12 @@ func punch():
 			anim.animation = "HighPunch"
 			HighPunch.play()
 			atkVal = 2
-		spawnPunch(atkVal, anim.get_playing_speed())
+		
 		stamina -= 2
 		moveCooldown = anim.get_playing_speed()
+		await get_tree().create_timer(0.5).timeout
+		spawnPunch(atkVal, 0.5)
+
 		
 func spawnPunch(_atkVal, _lifeSpan):
 	var createPunch = preload("res://Scenes/punch_projectile.tscn").instantiate()
